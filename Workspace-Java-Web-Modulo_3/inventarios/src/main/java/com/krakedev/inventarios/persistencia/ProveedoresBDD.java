@@ -53,8 +53,6 @@ public class ProveedoresBDD {
 	public void insertar(Proveedor p) throws KrakeDevException{
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs= null;
-		Proveedor objetoP = null;
 		try {
 			con = ConexionBdd.obtenerConexion();
 			ps = con.prepareStatement("INSERT INTO proveedores (identificador,tipo_documento,nombre,telefono,correo,direccion) "
