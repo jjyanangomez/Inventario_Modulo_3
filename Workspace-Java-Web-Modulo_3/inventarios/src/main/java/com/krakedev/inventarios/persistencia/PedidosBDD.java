@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -70,6 +71,10 @@ public class PedidosBDD {
 		Connection con = null;
 		PreparedStatement ps = null;
 		PreparedStatement psAux = null;
+		PreparedStatement psHis = null;
+		
+		Date fechaActual = new Date();
+		Timestamp fechaHoraActual = new Timestamp(fechaActual.getTime());
 		try {
 			con = ConexionBdd.obtenerConexion();
 			ps = con.prepareStatement("UPDATE cabecera_pedidos SET "
@@ -78,7 +83,11 @@ public class PedidosBDD {
 			ps.setInt(2,p.getNumeroPedido());
 			
 			ps.executeUpdate();
-			
+			/*
+			 * 
+			 * /////////////////////////// Actualizar detalle del pedido //////////////////////////////////
+			 * 
+			 */
 			ArrayList<DetallePedido> ListDetalle = p.getDetalles();
 			DetallePedido dp= null;
 			for (int i = 0; i < ListDetalle.size(); i++) {
@@ -94,6 +103,20 @@ public class PedidosBDD {
 				psAux.setInt(3, dp.getCodigo());
 				
 				psAux.executeUpdate();
+				/*
+				 * 
+				 * /////////////////////////// Guardar en el historial //////////////////////////////////
+				 * 
+				 */
+				
+				psHis = con.prepareStatement("INSERT INTO historial (fecha,referencia,producto,cantidad) "
+						+ "VALUES (?,?,?,?);");
+				psHis.setTimestamp(1, fechaHoraActual);
+				psHis.setString(2, "Pedido"+p.getNumeroPedido());
+				psHis.setInt(3, dp.getProducto().getCodigo());
+				psHis.setInt(4, dp.getCantidadRecibida());
+				
+				psHis.executeUpdate();
 			}
 			
 		} catch (KrakeDevException e) {
