@@ -173,20 +173,18 @@ select * from detalle_pedido;
 create table historial(
 	codigo serial not null,
 	fecha timestamp not null,
-	referencia int  not null,
+	referencia varchar(25)  not null,
 	producto int not null,
 	cantidad int not null,
-	constraint historial_PK PRIMARY KEY(codigo),
-	constraint cabecera_pedido_FK foreign KEY (referencia) 
-	references cabecera_pedidos (numero_pedido),	
+	constraint historial_PK PRIMARY KEY(codigo),	
 	constraint producto_FK foreign KEY (producto) 
 	references productos (codigo_producto)
 );
-INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  16:59:00',1,1,100);
-INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  16:59:01',1,4,50);
-INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00',2,1,10);
-INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00',1,1,-5);
-INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00',1,4,-1);
+INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  16:59:00','Pedido 1',1,100);
+INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  16:59:01','Pedido 1',4,50);
+INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00','Pedido 2',1,10);
+INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00','Venta 1',1,-5);
+INSERT INTO historial (fecha,referencia,producto,cantidad) VALUES ('25/4/2024  20:00:00','Venta 1',4,-1);
 
 select * from historial;
 
