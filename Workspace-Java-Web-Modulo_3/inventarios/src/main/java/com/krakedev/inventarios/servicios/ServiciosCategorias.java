@@ -7,55 +7,52 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.krakedev.inventarios.entidades.Pedido;
+import com.krakedev.inventarios.entidades.Categoria;
 import com.krakedev.inventarios.excepciones.KrakeDevException;
-import com.krakedev.inventarios.persistencia.PedidosBDD;
+import com.krakedev.inventarios.persistencia.CategoriaBDD;
 
-
-@Path("pedidos")
-public class ServiciosPedidos {
-	
-	@Path("registrar")
+@Path("categorias")
+public class ServiciosCategorias {
+	@Path("crear")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response crear(Pedido p) {
-		PedidosBDD cli = new PedidosBDD();
+	public Response crear(Categoria c) {
+		CategoriaBDD cli = new CategoriaBDD();
 		try {
-			cli.insertar(p);
+			cli.insertar(c);
 			return Response.ok().build();
 		} catch (KrakeDevException e) {
 			e.printStackTrace();
 			return Response.serverError().build();
 		}
 	}
-	@Path("recibir")
+
+	@Path("actualizar")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response recibir(Pedido p) {
-		PedidosBDD cli = new PedidosBDD();
+	public Response actualizar(Categoria c) {
+		CategoriaBDD cli = new CategoriaBDD();
 		try {
-			cli.actualizar(p);
+			cli.actualizar(c);
 			return Response.ok().build();
 		} catch (KrakeDevException e) {
 			e.printStackTrace();
 			return Response.serverError().build();
 		}
 	}
-	
-	@Path("buscar/{sub}")
+	@Path("recuperar")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscar(@PathParam("sub")String proveedor){
-		PedidosBDD cli = new PedidosBDD();
-		ArrayList<Pedido> listaPedidos = null;
+	public Response todasCategorias() {
+		CategoriaBDD cli = new CategoriaBDD();
+		ArrayList<Categoria> listCategorias = null;
 		try {
-			listaPedidos = cli.buscarPorProveedor(proveedor);
-			return Response.ok(listaPedidos).build();
+			listCategorias = cli.recuperarTodas();
+			return Response.ok(listCategorias).build();
 		} catch (KrakeDevException e) {
 			e.printStackTrace();
 			return Response.serverError().build();
