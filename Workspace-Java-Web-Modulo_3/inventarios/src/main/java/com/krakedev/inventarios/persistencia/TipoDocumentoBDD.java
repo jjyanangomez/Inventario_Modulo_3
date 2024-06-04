@@ -39,4 +39,22 @@ public class TipoDocumentoBDD {
 		}
 		return ListTipoDocumento;
 	}
+	public void insertar(TipoDocumento td) throws KrakeDevException{
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ConexionBdd.obtenerConexion();
+			ps = con.prepareStatement("INSERT INTO tipo_documento(codigo_doc,descripcion) "
+					+ "VALUES (?,?);");
+			ps.setString(1, td.getCodigoDoc());
+			ps.setString(2, td.getDescripcion());
+			ps.executeUpdate();
+		} catch (KrakeDevException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new KrakeDevException("Error al insertar el producto: "+e.getMessage());
+		}
+	}
 }
