@@ -1,0 +1,38 @@
+***************************************
+Cambios en el server.xml
+	<Resource name="jdbc/PgDB" 
+      global="jdbc/PgDB" 
+      auth="Container" 
+      type="javax.sql.DataSource" 
+      driverClassName="org.postgresql.Driver" 
+      url="jdbc:postgresql://localhost:5432/postgres" 
+      username="postgres" 
+      password="postgres" 
+      
+      maxActive="100" 
+      maxIdle="20" 
+      minIdle="5" 
+      maxWait="10000"/>
+
+*****************************************
+Cambios en el context.xml
+
+<ResourceLink name="jdbc/PgDB"
+                global="jdbc/PgDB"
+                auth="Container"
+                type="javax.sql.DataSource" />
+
+*********************************************
+Invocar la conexión JDBC
+		Context ctx=null;
+		DataSource ds=null;
+		Connection con=null;
+			ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:/comp/env/jdbc/PgDB");
+			con = ds.getConnection();
+	
+
+*************************************
+Descargar el archivo: 
+postgresql-42.6.0.jar de la ruta https://jdbc.postgresql.org/download/
+y colocar en la carpeta lib de tomcat

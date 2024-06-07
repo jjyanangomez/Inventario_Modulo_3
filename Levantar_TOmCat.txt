@@ -1,0 +1,18 @@
+/*        Direccion del tomcat    */
+
+C:\apache-tomcat-10.1.18\bin
+
+/*        Inicializar en cmd        */
+
+startup.bat
+
+
+/*        Administrar TomCat       */
+
+-----Dirigirse a: 
+C:\apache-tomcat-10.1.18\conf
+-----abrir el archivo 
+tomcat-users.xml
+----- Descomentar esto y cambiar la contraseña
+  <user username="admin" password="root123" roles="manager-gui"/>
+  <user username="robot" password="root123" roles="manager-script"/>
